@@ -8,21 +8,23 @@
             <div class="alert alert-danger negrito" role="alert">{{erroLogin}}</div>
           }
           <h1 class="negrito">CONFRATERES</h1>
-          <mdb-form-control>
-            <input mdbInput type="text" id="usuario" class="form-control" [(ngModel)]="loginDTO.login"  (keyup.enter)="logar()" />
-            <label mdbLabel class="form-label" for="form1">Usuário</label>
-          </mdb-form-control>
-          <mdb-form-control class="componetes-margin">
-            <input mdbInput type="password" id="senha" class="form-control" [(ngModel)]="loginDTO.password"  (keyup.enter)="logar()" />
-            <label mdbLabel class="form-label" for="form1">Senha</label>
-          </mdb-form-control>
-          <button type="button" class="btn btn-primary btn-rounded componetes-margin" mdbRipple (click)="logar()">Login</button>
+
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="dsUsuario" placeholder="Usuário" [(ngModel)]="loginDTO.login">
+            <label for="dsUsuario">Usuário</label>
+          </div>
+
+          <div class="form-floating mb-2">
+            <input type="password" class="form-control" id="dsSenha" placeholder="Password" [(ngModel)]="loginDTO.password">
+            <label for="dsSenha">Senha</label>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="logar()">Login</button>
           <div>
-            <button type="button" class="btn btn-link componetes-margin" (click)="recuperarSenha()">Recuperar Senha</button>
+            <button type="button" class="btn btn-link" (click)="recuperarSenha()">Recuperar Senha</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-

@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import Swal from 'sweetalert2';
 import { LoginDTO } from '../../../model/login/login-dto';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +13,7 @@ import { PrincipalComponent } from "../principal/principal.component";
     standalone: true,
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
-    imports: [MdbFormsModule, FormsModule, PrincipalComponent]
+    imports: [FormsModule, PrincipalComponent]
 })
 export class LoginComponent {
 
@@ -34,6 +33,9 @@ export class LoginComponent {
         localStorage.setItem("convencao-usu", this.loginRetornoDTO.dsNome);
         this.erroLogin = '';
         this.router.navigate(['convencao']);
+
+        console.log("Trancodes: " + this.loginRetornoDTO.trancodes[0]);
+
       },
       error: erros => {
         this.errorDTO = erros.error;
