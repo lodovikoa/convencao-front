@@ -17,7 +17,8 @@ import { PrincipalComponent } from "../principal/principal.component";
 })
 export class LoginComponent {
 
-  erroLogin!: string;
+  mensagemLogin!: string;
+  classMensagem: string = "alert alert-danger negrito";
   loginDTO = new LoginDTO();
   loginRetornoDTO = new LoginRetornoDTO();
   errorDTO = new ErrorDTO();
@@ -32,7 +33,7 @@ export class LoginComponent {
         localStorage.setItem("cvn-authorization", this.loginRetornoDTO.token);
         localStorage.setItem("cvn-usu", this.loginRetornoDTO.dsNome);
         localStorage.setItem("cvn-trancode", this.loginRetornoDTO.trancodes)
-        this.erroLogin = '';
+        this.mensagemLogin = '';
         this.router.navigate(['convencao']);
       },
       error: erros => {
@@ -41,9 +42,11 @@ export class LoginComponent {
         localStorage.removeItem('cvn-usu');
         localStorage.removeItem("cvn-trancode")
         if(this.errorDTO.dsMensUsuario != null) {
-          this.erroLogin = this.errorDTO.dsMensUsuario;
+          this.mensagemLogin = this.errorDTO.dsMensUsuario;
+          this.classMensagem = "alert alert-danger negrito";
         } else {
-          this.erroLogin = 'Erro não identificado, contacte o administrador.';
+          this.mensagemLogin = 'Erro não identificado, contacte o administrador.';
+          this.classMensagem = "alert alert-danger negrito";
         }
       }
     });
@@ -60,9 +63,29 @@ export class LoginComponent {
       denyButtonText: 'Cancelar'
     }).then(result => {
       if(result.isConfirmed){
-        alert('Desenvolver recuperar senha.');
+        this.loginService.recuperarSenha(this.loginDTO.login).subscribe({
+          next: resultado => {
+            this.mensagemLogin = resultado.dsMensagem;
+            this.classMensagem = "alert alert-success negrito";
+            localStorage.removeItem("cvn-authorization");
+            localStorage.removeItem('cvn-usu');
+            localStorage.removeItem("cvn-trancode")
+          },
+          error: erros => {
+            this.errorDTO = erros.error;
+            localStorage.removeItem("cvn-authorization");
+            localStorage.removeItem('cvn-usu');
+            localStorage.removeItem("cvn-trancode")
+            if(this.errorDTO.dsMensUsuario != null) {
+              this.mensagemLogin = this.errorDTO.dsMensUsuario;
+              this.classMensagem = "alert alert-danger negrito";
+            } else {
+              this.mensagemLogin = 'Erro não identificado, contacte o administrador.';
+              this.classMensagem = "alert alert-danger negrito";
+            }
+          }
+        });
       }
     });
   }
-
 }
