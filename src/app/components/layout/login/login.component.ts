@@ -29,18 +29,17 @@ export class LoginComponent {
     this.loginService.login(this.loginDTO).subscribe({
       next: resultado => {
         this.loginRetornoDTO = resultado;
-        localStorage.setItem("convencao-authorization", this.loginRetornoDTO.token);
-        localStorage.setItem("convencao-usu", this.loginRetornoDTO.dsNome);
+        localStorage.setItem("cvn-authorization", this.loginRetornoDTO.token);
+        localStorage.setItem("cvn-usu", this.loginRetornoDTO.dsNome);
+        localStorage.setItem("cvn-trancode", this.loginRetornoDTO.trancodes)
         this.erroLogin = '';
         this.router.navigate(['convencao']);
-
-        console.log("Trancodes: " + this.loginRetornoDTO.trancodes[0]);
-
       },
       error: erros => {
         this.errorDTO = erros.error;
-        localStorage.removeItem("convencao-authorization");
-        localStorage.removeItem('convencao-usu');
+        localStorage.removeItem("cvn-authorization");
+        localStorage.removeItem('cvn-usu');
+        localStorage.removeItem("cvn-trancode")
         if(this.errorDTO.dsMensUsuario != null) {
           this.erroLogin = this.errorDTO.dsMensUsuario;
         } else {
@@ -58,7 +57,7 @@ export class LoginComponent {
       showConfirmButton: true,
       showDenyButton: true,
       confirmButtonText: 'Confirmar',
-      denyButtonText: 'Voltar'
+      denyButtonText: 'Cancelar'
     }).then(result => {
       if(result.isConfirmed){
         alert('Desenvolver recuperar senha.');

@@ -3,14 +3,28 @@ header {
   background: rgb(0, 51, 0);
 }
 
-span {
+.usuLogado {
   color: white;
-  margin-left: 10px;
+  font-weight: bold;
+}
+
+.botaoFechar {
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.botaoFechar:hover {
+  color: yellow;
+  font-size: 19px;
+  transition: 0.4s ease-in-out;
 }
 
 .logo {
   width: 40px;
   height: 60px;
+  margin-right: 5px;
 }
 
 .logo:hover {
