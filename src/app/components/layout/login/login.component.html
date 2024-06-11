@@ -13,15 +13,24 @@
             <input type="text" class="form-control" id="dsUsuario" placeholder="Usuário" [(ngModel)]="loginDTO.login">
             <label for="dsUsuario">Usuário</label>
           </div>
-
           <div class="form-floating mb-2">
             <input type="password" class="form-control" id="dsSenha" placeholder="Password" [(ngModel)]="loginDTO.password">
             <label for="dsSenha">Senha</label>
           </div>
 
-          <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="logar()">Login</button>
+          <button type="button"
+                  class="btn btn-primary btn-rounded"
+                  mdbRipple (click)="logar()"
+                  [disabled]="(loginDTO.login==undefined || loginDTO.login.length < 3) || (loginDTO.password==undefined || loginDTO.password.length < 3)">
+                  Login
+            </button>
           <div>
-            <button type="button" class="btn btn-link" (click)="recuperarSenha()">Recuperar Senha</button>
+            <button type="button"
+                    class="btn btn-link"
+                    (click)="recuperarSenha()"
+                    [disabled]="loginDTO.login==undefined || loginDTO.login.length < 3">
+                    Recuperar Senha
+              </button>
           </div>
         </div>
       </div>

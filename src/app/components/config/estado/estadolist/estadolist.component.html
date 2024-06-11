@@ -1,1 +1,72 @@
-<p>estadolist works!</p>
+<div class="container container-principal">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3>Estados</h3>
+          <div class="direita">
+            <!--
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/admin/carros/new">Novo</button>
+
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="estadoNovo()">Cadastrar Estado</button>
+             -->
+
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="abrirModal()">Cadastrar Estado</button>
+
+          </div>
+          <table border="1" class="table table-striped">
+            <thead>
+              <tr>
+                <th class="ocultar-elemento">ID</th>
+                <th>Sigla</th>
+                <th>Nome</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of estados; track $index) {
+                <tr>
+                  <td class="ocultar-elemento">{{item.sqEstado}}</td>
+                  <td>{{item.dsUf}}</td>
+                  <td>{{item.dsNome}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-floating me-1" mdbRipple (click)="estadoEditar(item)">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-floating botao-esquerda" mdbRipple (click)="estadoExcluir(item)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para cadastrar/alterar Estados -->
+<div id="modalEstados" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3 class="modal-title">{{nomeDaModal}}</h3>
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <app-estadodetail></app-estadodetail>
+      </div>
+
+      <div class="modal-footer">
+        <button id="closeModalButton" [hidden]="true"type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="fecharModal()">Fechar</button>
+        <button id="closeModalVisivel" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>

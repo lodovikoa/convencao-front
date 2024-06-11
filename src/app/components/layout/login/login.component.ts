@@ -27,21 +27,23 @@ export class LoginComponent {
   router = inject(Router);
 
   logar() {
+    this.mensagemLogin = '';
+    localStorage.removeItem("cvn-authorization");
+    localStorage.removeItem('cvn-usu');
+    localStorage.removeItem("cvn-trancode")
+
     this.loginService.login(this.loginDTO).subscribe({
       next: resultado => {
         this.loginRetornoDTO = resultado;
         localStorage.setItem("cvn-authorization", this.loginRetornoDTO.token);
         localStorage.setItem("cvn-usu", this.loginRetornoDTO.dsNome);
         localStorage.setItem("cvn-trancode", this.loginRetornoDTO.trancodes)
-        this.mensagemLogin = '';
+
         this.router.navigate(['convencao']);
       },
       error: erros => {
         this.errorDTO = erros.error;
-        localStorage.removeItem("cvn-authorization");
-        localStorage.removeItem('cvn-usu');
-        localStorage.removeItem("cvn-trancode")
-        if(this.errorDTO.dsMensUsuario != null) {
+        if(this.errorDTO != null && this.errorDTO.dsMensUsuario != null) {
           this.mensagemLogin = this.errorDTO.dsMensUsuario;
           this.classMensagem = "alert alert-danger negrito";
         } else {
@@ -54,6 +56,11 @@ export class LoginComponent {
 
 
   recuperarSenha() {
+    this.mensagemLogin = '';
+    localStorage.removeItem("cvn-authorization");
+    localStorage.removeItem('cvn-usu');
+    localStorage.removeItem("cvn-trancode")
+
     Swal.fire({
       title: 'Sua senha será reiniciada e enviada para o email cadastrado.',
       icon: 'info',
@@ -67,15 +74,9 @@ export class LoginComponent {
           next: resultado => {
             this.mensagemLogin = resultado.dsMensagem;
             this.classMensagem = "alert alert-success negrito";
-            localStorage.removeItem("cvn-authorization");
-            localStorage.removeItem('cvn-usu');
-            localStorage.removeItem("cvn-trancode")
           },
           error: erros => {
             this.errorDTO = erros.error;
-            localStorage.removeItem("cvn-authorization");
-            localStorage.removeItem('cvn-usu');
-            localStorage.removeItem("cvn-trancode")
             if(this.errorDTO.dsMensUsuario != null) {
               this.mensagemLogin = this.errorDTO.dsMensUsuario;
               this.classMensagem = "alert alert-danger negrito";

@@ -1,1 +1,39 @@
-<p>estadodetail works!</p>
+<div class="container container-principal">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3>Estado</h3>
+
+          <form>
+            <div class="form-group row">
+              <div class="form-floating col-2">
+                <input type="text" class="form-control" id="inputDsUF" placeholder="UF" name="nameDsUf" [(ngModel)]="estadoDTO.dsUf">
+                <label for="inputDsUF">&nbsp; UF</label>
+              </div>
+              <div class="form-floating col-10">
+                <input type="text" class="form-control" id="inputDsNome" placeholder="Nome" name="nameDsNome" [(ngModel)]="estadoDTO.dsNome">
+                <label for="inputDsNome">&nbsp; Nome do estado</label>
+              </div>
+            </div>
+            <div class="button_salvar">
+              <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="salvar()">Salvar</button>
+            </div>
+          </form>
+
+          <!-- <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="dsUF" placeholder="UF" [(ngModel)]="estadoDTO.dsUf">
+            <label for="dsUF">UF</label>
+          </div>
+
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="dsNome" placeholder="UF" [(ngModel)]="estadoDTO.dsNome">
+            <label for="dsNome">Nome do estado</label>
+          </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

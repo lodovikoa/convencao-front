@@ -1,10 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 @import '@fortawesome/fontawesome-free/css/all.css';
 
+body {
+  background-color: rgb(242, 242, 242);
+}
+
 .centralizarTexto {
   text-align: center;
 }
 
-body {
-  background-color: rgb(242, 242, 242);
+.container-principal {
+  padding-top: 10px;
 }
+
+.direita {
+  text-align: right;
+  padding-bottom: 10px;
+}
+

@@ -56,6 +56,10 @@ header {
   transition: 0.4s ease-in-out;
 }
 
+.desktop_menu ul li ul li {
+  color: blue;
+}
+
 .menu-icon {
   display: none;
 }
@@ -70,6 +74,7 @@ header {
     width: 280px;
     height: 100%;
   }
+
   .desktop_menu ul li {
     display: block;
     text-align: left;
@@ -77,6 +82,11 @@ header {
     padding: 10px 0 10px 26px;
     border-bottom: 1px solid grey;
   }
+
+  .desktop_menu ul li ul li {
+    color: blue;
+  }
+
   .menu-icon {
     display: block;
     color: white;
@@ -87,4 +97,5 @@ header {
     right: 0;
     transition: 0.4s ease-in-out;
   }
+
 }

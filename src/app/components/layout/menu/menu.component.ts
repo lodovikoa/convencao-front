@@ -54,4 +54,7 @@ export class MenuComponent {
 
   }
 
+  estadosListar() {
+    this.router.navigate(['convencao/estados']);
+  }
 }
