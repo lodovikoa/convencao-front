@@ -7,12 +7,12 @@
           <h3>Estados</h3>
           <div class="direita">
             <!--
-            <button type="button" class="btn btn-primary btn-rounded" mdbRipple routerLink="/admin/carros/new">Novo</button>
+            <button type="button" class="btn btn-primary btn-rounded" routerLink="/admin/carros/new">Novo</button>
 
-            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="estadoNovo()">Cadastrar Estado</button>
+            <button type="button" class="btn btn-primary btn-rounded" (click)="estadoNovo()">Cadastrar Estado</button>
              -->
 
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="abrirModal()">Cadastrar Estado</button>
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="estadoCadastrar()">Cadastrar Estado</button>
 
           </div>
           <table border="1" class="table table-striped">
@@ -31,10 +31,10 @@
                   <td>{{item.dsUf}}</td>
                   <td>{{item.dsNome}}</td>
                   <td>
-                    <button type="button" class="btn btn-primary btn-floating me-1" mdbRipple (click)="estadoEditar(item)">
+                    <button type="button" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="estadoEditar(item)">
                       <i class="fa fa-pencil"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-floating botao-esquerda" mdbRipple (click)="estadoExcluir(item)">
+                    <button type="button" class="btn btn-danger btn-floating botao-esquerda" (click)="estadoExcluir(item)">
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </td>
@@ -42,11 +42,47 @@
               }
             </tbody>
           </table>
+
+          <div class="alert alert-light" role="alert">
+            <div class="d-flex">
+              <div class="p-2 flex-fill">Total de registros: <b>{{paginacaoDTO.totalElements}}</b></div>
+
+              <div class="p-0 flex-fill">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-end">
+                    <li class="page-item {{paginaPrimeira}}" (click)="processarPagina(0)"><a class="page-link"><i class="bi bi-chevron-bar-left"></i></a></li>
+                    <li class="page-item {{paginaPrimeira}}" (click)="processarPagina(-1)"><a class="page-link"><i class="bi bi-chevron-left"></i></a></li>
+
+                    @if(!ocultarItem1){ <li class="page-item {{paginaItem1}}" (click)="processarPagina(numPageItem1-1)"><a class="page-link">{{numPageItem1}}</a></li> }
+                    @if(!ocultarItem2){ <li class="page-item {{paginaItem2}}" (click)="processarPagina(numPageItem2-1)"><a class="page-link">{{numPageItem2}}</a></li> }
+                    @if(!ocultarItem3){ <li class="page-item {{paginaItem3}}" (click)="processarPagina(numPageItem3-1)"><a class="page-link">{{numPageItem3}}</a></li> }
+                    @if(!ocultarItem4){ <li class="page-item {{paginaItem4}}" (click)="processarPagina(numPageItem4-1)"><a class="page-link">{{numPageItem4}}</a></li> }
+                    @if(!ocultarItem5){ <li class="page-item {{paginaItem5}}" (click)="processarPagina(numPageItem5-1)"><a class="page-link">{{numPageItem5}}</a></li> }
+                    @if(!ocultarItem6){ <li class="page-item {{paginaItem6}}" (click)="processarPagina(numPageItem6-1)"><a class="page-link">{{numPageItem6}}</a></li> }
+                    @if(!ocultarItem7){ <li class="page-item {{paginaItem7}}" (click)="processarPagina(numPageItem7-1)"><a class="page-link">{{numPageItem7}}</a></li> }
+
+                    <li class="page-item {{paginaUltima}}" (click)="processarPagina(-2)"><a class="page-link"><i class="bi bi-chevron-right"></i></a></li>
+                    <li class="page-item {{paginaUltima}}" (click)="processarPagina(-9)"> <a class="page-link"><i class="bi bi-chevron-bar-right"></i></a></li>
+                  </ul>
+                </nav>
+              </div>
+
+              <div>
+                <select class="form-select" (change)="obterSelect($event)" aria-label="Selecione a quantidade de registro por páginas">
+                  <option value="4">4</option>
+                  <option selected value="10">10</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-- Modal para cadastrar/alterar Estados -->
 <div id="modalEstados" class="modal fade">
@@ -59,7 +95,7 @@
       </div>
 
       <div class="modal-body">
-        <app-estadodetail></app-estadodetail>
+        <app-estadodetail [estadoDTO]="estadoDTOedit"></app-estadodetail>
       </div>
 
       <div class="modal-footer">

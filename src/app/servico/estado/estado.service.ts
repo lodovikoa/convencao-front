@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EstadoDTO } from '../../model/estado/estado-dto';
 import { environment } from '../../environments/environment';
+import { EstadoDTOList } from '../../model/estado/estado-dtolist';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +11,29 @@ import { environment } from '../../environments/environment';
 export class EstadoService {
 
   http = inject(HttpClient);
+  urlApi = environment.urlApi + 'estados';
 
   constructor() { }
 
-  listar(): Observable<EstadoDTO[]> {
-    return this.http.get<EstadoDTO[]>(environment.urlApi + 'estados');
+  listar(page: number, size: number): Observable<EstadoDTOList> {
+    console.log('listar (services) ==> '+ page + ' ==> ' + size);
+
+    return this.http.get<EstadoDTOList>(`${this.urlApi}?page=${page}&size=${size}`);
+  }
+
+  buscarPorId(sqEstado: number): Observable<EstadoDTO> {
+    return this.http.get<EstadoDTO>(this.urlApi + '/' + sqEstado);
   }
 
   excluir(sqEstado: number): Observable<any> {
-    return this.http.delete<any>(environment.urlApi + 'estados/' + sqEstado);
+    return this.http.delete<any>(this.urlApi + '/' + sqEstado);
   }
 
   cadastrar(estadoDTO: EstadoDTO): Observable<EstadoDTO> {
-    return this.http.post<EstadoDTO>(environment.urlApi + 'estados',estadoDTO);
+    return this.http.post<EstadoDTO>(this.urlApi, estadoDTO);
+  }
+
+  alterar(estadoDTO: EstadoDTO): Observable<EstadoDTO> {
+    return this.http.put<EstadoDTO>(this.urlApi + '/' + estadoDTO.sqEstado, estadoDTO);
   }
 }
