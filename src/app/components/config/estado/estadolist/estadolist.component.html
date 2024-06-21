@@ -50,19 +50,16 @@
               <div class="p-0 flex-fill">
                 <nav aria-label="...">
                   <ul class="pagination justify-content-end">
-                    <li class="page-item {{paginaPrimeira}}" (click)="processarPagina(0)"><a class="page-link"><i class="bi bi-chevron-bar-left"></i></a></li>
-                    <li class="page-item {{paginaPrimeira}}" (click)="processarPagina(-1)"><a class="page-link"><i class="bi bi-chevron-left"></i></a></li>
+                    <li class="page-item {{paginaPrimeira}}" (click)="processarPrimeiraPagina()"><a class="page-link"><i class="bi bi-chevron-bar-left"></i></a></li>
+                    <li class="page-item {{paginaPrimeira}}" (click)="processarVoltarPagina()"><a class="page-link"><i class="bi bi-chevron-left"></i></a></li>
 
-                    @if(!ocultarItem1){ <li class="page-item {{paginaItem1}}" (click)="processarPagina(numPageItem1-1)"><a class="page-link">{{numPageItem1}}</a></li> }
-                    @if(!ocultarItem2){ <li class="page-item {{paginaItem2}}" (click)="processarPagina(numPageItem2-1)"><a class="page-link">{{numPageItem2}}</a></li> }
-                    @if(!ocultarItem3){ <li class="page-item {{paginaItem3}}" (click)="processarPagina(numPageItem3-1)"><a class="page-link">{{numPageItem3}}</a></li> }
-                    @if(!ocultarItem4){ <li class="page-item {{paginaItem4}}" (click)="processarPagina(numPageItem4-1)"><a class="page-link">{{numPageItem4}}</a></li> }
-                    @if(!ocultarItem5){ <li class="page-item {{paginaItem5}}" (click)="processarPagina(numPageItem5-1)"><a class="page-link">{{numPageItem5}}</a></li> }
-                    @if(!ocultarItem6){ <li class="page-item {{paginaItem6}}" (click)="processarPagina(numPageItem6-1)"><a class="page-link">{{numPageItem6}}</a></li> }
-                    @if(!ocultarItem7){ <li class="page-item {{paginaItem7}}" (click)="processarPagina(numPageItem7-1)"><a class="page-link">{{numPageItem7}}</a></li> }
+                    @for (item of paginaItens; track $index) {
+                      <li class="page-item {{paginaDestaque[$index]}}" (click)="processarPagina(item, $index)"><a class="page-link">{{item + 1}}</a></li>
+                    }
 
-                    <li class="page-item {{paginaUltima}}" (click)="processarPagina(-2)"><a class="page-link"><i class="bi bi-chevron-right"></i></a></li>
-                    <li class="page-item {{paginaUltima}}" (click)="processarPagina(-9)"> <a class="page-link"><i class="bi bi-chevron-bar-right"></i></a></li>
+
+                    <li class="page-item {{paginaUltima}}" (click)="processarAvancarPagina()"><a class="page-link"><i class="bi bi-chevron-right"></i></a></li>
+                    <li class="page-item {{paginaUltima}}" (click)="processarUltimaPagina()"> <a class="page-link"><i class="bi bi-chevron-bar-right"></i></a></li>
                   </ul>
                 </nav>
               </div>
