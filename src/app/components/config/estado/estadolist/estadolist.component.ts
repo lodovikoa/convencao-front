@@ -5,7 +5,6 @@ import { ErrorDTO } from '../../../../model/error/error-dto';
 import Swal from 'sweetalert2';
 import { EstadodetailComponent } from "../estadodetail/estadodetail.component";
 import { PaginacaoDTO } from '../../../../model/paginacao/paginacao-dto';
-import { EMPTY } from 'rxjs';
 
 
 @Component({
@@ -28,47 +27,17 @@ export class EstadolistComponent {
   nomeDaModal!: string;
 
   // Variáveis para controlar a paginação
-
   paginaItens: number[] = [];
   paginaItensTemp: number[] = [];
   paginaDestaque: string[] = [];
-
   paginaAtual: number = 0;
-
   paginaPrimeira!: string;
   paginaUltima!: string;
-
-  paginaItem1!: string;
-  paginaItem2!: string;
-  paginaItem3!: string;
-  paginaItem4!: string;
-  paginaItem5!: string;
-  paginaItem6!: string;
-  paginaItem7!: string;
-
-
-  ocultarItem1: boolean = false;
-  ocultarItem2: boolean = false;
-  ocultarItem3: boolean = false;
-  ocultarItem4: boolean = false;
-  ocultarItem5: boolean = false;
-  ocultarItem6: boolean = false;
-  ocultarItem7: boolean = false;
-
-  numPageItem1: number = 1;
-  numPageItem2: number = 2;
-  numPageItem3: number = 3;
-  numPageItem4: number = 4;
-  numPageItem5: number = 5;
-  numPageItem6: number = 6;
-  numPageItem7: number = 7;
-
 
   QtdeElementosPorPagina: number = 10;
 
   constructor() {
-    this.processarPagina(0, 1);
-    // this.estadosListar(0, this.QtdeElementosPorPagina);
+    this.processarPagina(0);
   }
 
   estadosListar(page: number, size:number) {
@@ -143,26 +112,45 @@ export class EstadolistComponent {
   }
 
   paginacaoDetalhes() {
-    // this.paginaItens = Array(this.paginacaoDTO.totalPages).fill(0).map((x,i) => i);
 
     let primeiroItemExibir = 0;
-    let ultimoItemExibir = this.paginacaoDTO.totalPages
+    let ultimoItemExibir = this.paginacaoDTO.totalPages;
 
-    if(this.paginacaoDTO.pageNumber > 3 && this.paginacaoDTO.totalPages > 7) {
-      primeiroItemExibir = this.paginacaoDTO.pageNumber - 3;
+    if(this.paginacaoDTO.totalPages > 7) {
+      ultimoItemExibir = 7;
+      if(this.paginacaoDTO.pageNumber > 3) {
+
+        primeiroItemExibir = this.paginacaoDTO.pageNumber - 3;
+
+        if((this.paginacaoDTO.pageNumber + 3) < this.paginacaoDTO.totalPages) {
+          ultimoItemExibir = this.paginacaoDTO.pageNumber + 4;
+        } else {
+          ultimoItemExibir = this.paginacaoDTO.totalPages;
+
+          switch (this.paginacaoDTO.totalPages - this.paginacaoDTO.pageNumber) {
+            case 1:
+              primeiroItemExibir -= 3;
+              break;
+            case 2:
+              primeiroItemExibir -= 2;
+              break;
+            case 3:
+              primeiroItemExibir -= 1;
+              break;
+            default:
+              break;
+          }
+        }
+      }
     }
 
     this.paginaItens = Array(ultimoItemExibir - primeiroItemExibir);
 
-
     for(let i = 0; i < ultimoItemExibir; i++) {
-     if(i >= primeiroItemExibir) {
-        this.paginaItensTemp[i] = i;
-      }
-
+      this.paginaItensTemp[i] = i;
     }
 
-    this.paginaItens = this.paginaItensTemp.filter(n => n >= primeiroItemExibir);
+    this.paginaItens = this.paginaItensTemp.filter(n =>  n >= primeiroItemExibir && n < ultimoItemExibir);
 
     for(let k = 0; k < this.paginaItens.length; k++) {
       if(this.paginaAtual == this.paginaItens[k]) {
@@ -178,35 +166,33 @@ export class EstadolistComponent {
   }
 
   processarPrimeiraPagina(): void {
-     this.processarPagina(0, 1);
+     this.processarPagina(0);
   }
 
   processarUltimaPagina(): void {
-    this.processarPagina(this.paginacaoDTO.totalPages - 1, 7);
+    this.processarPagina(this.paginacaoDTO.totalPages - 1);
   }
 
   processarVoltarPagina(): void {
     if(this.paginacaoDTO.pageNumber > 0) {
-      this.processarPagina(this.paginacaoDTO.pageNumber - 1, 1);
+      this.processarPagina(this.paginacaoDTO.pageNumber - 1);
     }
   }
 
   processarAvancarPagina(): void {
     if(this.paginacaoDTO.pageNumber < this.paginacaoDTO.totalPages) {
-      this.processarPagina(this.paginacaoDTO.pageNumber + 1, 7);
+      this.processarPagina(this.paginacaoDTO.pageNumber + 1);
     }
   }
 
-  processarPagina(pagina: number, item: number) {
+  processarPagina(pagina: number) {
     this.paginaAtual = pagina;
-
     this.estadosListar(this.paginaAtual, this.QtdeElementosPorPagina);
-
   }
 
   obterSelect(e:any) {
     this.QtdeElementosPorPagina = e.target.value;
-    this.processarPagina(0, 1);
+    this.processarPagina(0);
   }
 
 }
