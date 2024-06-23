@@ -16,8 +16,6 @@ export class EstadoService {
   constructor() { }
 
   listar(page: number, size: number): Observable<EstadoDTOList> {
-    console.log('listar (services) ==> '+ page + ' ==> ' + size);
-
     return this.http.get<EstadoDTOList>(`${this.urlApi}?page=${page}&size=${size}`);
   }
 

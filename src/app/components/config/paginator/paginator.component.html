@@ -1,0 +1,33 @@
+<div class="alert alert-light" role="alert">
+  <div class="d-flex">
+    <div class="p-2 flex-fill">Total de registros: <b>{{paginacaoDTO.totalElements}}</b></div>
+
+    <div class="p-0 flex-fill">
+      <nav aria-label="...">
+        <ul class="pagination justify-content-end">
+          <li class="ocultar-elemento">{{paginacaoDetalhes()}}</li>
+          <li class="page-item {{paginaPrimeira}}" (click)="processarPrimeiraPagina()"><a class="page-link"><i class="bi bi-chevron-bar-left"></i></a></li>
+          <li class="page-item {{paginaPrimeira}}" (click)="processarVoltarPagina()"><a class="page-link"><i class="bi bi-chevron-left"></i></a></li>
+          @for (item of paginaItens; track $index) {
+            <li class="page-item {{paginaDestaque[$index]}}" (click)="processarPagina(item)"><a class="page-link">{{item + 1}}</a></li>
+          }
+
+
+          <li class="page-item {{paginaUltima}}" (click)="processarAvancarPagina()"><a class="page-link"><i class="bi bi-chevron-right"></i></a></li>
+          <li class="page-item {{paginaUltima}}" (click)="processarUltimaPagina()"> <a class="page-link"><i class="bi bi-chevron-bar-right"></i></a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div>
+      <select class="form-select" (change)="obterSelect($event)" aria-label="Selecione a quantidade de registro por páginas">
+        <option selected value="10">10</option>
+        <option value="40">40</option>
+        <option value="60">60</option>
+        <option value="80">80</option>
+      </select>
+    </div>
+  </div>
+  <div class="direita">Exibindo página <b>{{paginacaoDTO.pageNumber + 1}}</b> de <b>{{paginacaoDTO.totalPages}}</b></div>
+</div>
+
