@@ -74,9 +74,10 @@ export class PaginatorComponent {
 
   paginacaoDetalhes() {
     if(this.paginacaoDTO.totalPages != undefined) {
+      this.paginaAtual = this.paginacaoDTO.pageNumber;
+
       let primeiroItemExibir = 0;
       let ultimoItemExibir = this.paginacaoDTO.totalPages;
-
 
       if(this.paginacaoDTO.totalPages > 7) {
         ultimoItemExibir = 7;

@@ -6,32 +6,33 @@
         <div class="card-body">
           <h3>Estado</h3>
 
-          <form>
+          <form class="needs-validation" novalidate #userForm="ngForm">
             <div class="form-group row">
+
+              <!-- UF -->
+              <div class="text-danger" *ngIf="dsUf.invalid && (dsUf.touched || dsUf.dirty) || isFormSubmetido">
+                <span *ngIf="dsUf.errors?.['required']">UF é obrigatório</span>
+                <span *ngIf="dsUf.errors?.['pattern']">Obrigatório 2 caracteres em maiúsculo</span>
+              </div>
               <div class="form-floating col-2">
-                <input type="text" class="form-control" id="inputDsUF" placeholder="UF" name="nameDsUf" [(ngModel)]="estadoDTO.dsUf">
+                <input type="text" class="form-control" #dsUf="ngModel" placeholder="UF" name="dsUf" [(ngModel)]="estadoDTO.dsUf" required maxlength="2" pattern="[A-Z]{2}">
                 <label for="inputDsUF">&nbsp; UF</label>
               </div>
+
+              <!-- Nome do estado -->
               <div class="form-floating col-10">
-                <input type="text" class="form-control" id="inputDsNome" placeholder="Nome" name="nameDsNome" [(ngModel)]="estadoDTO.dsNome">
+                <input type="text" class="form-control" #dsNome="ngModel" placeholder="Nome" name="dsNome" [(ngModel)]="estadoDTO.dsNome" required minlength="3" maxlength="50">
                 <label for="inputDsNome">&nbsp; Nome do estado</label>
+                <div class="text-danger" *ngIf="dsNome.invalid && (dsNome.touched || dsNome.dirty) || isFormSubmetido">
+                  <span *ngIf="dsNome.errors?.['required']">Nome é obrigatório</span>
+                  <span *ngIf="dsNome.errors?.['minlength']">Míninimo de 3 caracteres</span>
+                </div>
               </div>
             </div>
             <div class="button_salvar">
-              <button type="button" class="btn btn-primary btn-rounded" (click)="salvar()">Salvar</button>
+              <button type="button" class="btn btn-primary btn-rounded" [disabled]="userForm.invalid" (click)="salvar(userForm)">Salvar</button>
             </div>
           </form>
-
-          <!-- <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="dsUF" placeholder="UF" [(ngModel)]="estadoDTO.dsUf">
-            <label for="dsUF">UF</label>
-          </div>
-
-          <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="dsNome" placeholder="UF" [(ngModel)]="estadoDTO.dsNome">
-            <label for="dsNome">Nome do estado</label>
-          </div> -->
-
         </div>
       </div>
     </div>

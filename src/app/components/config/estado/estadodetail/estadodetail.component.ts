@@ -1,15 +1,16 @@
 import { Component, Input, inject } from '@angular/core';
 import { EstadoDTO } from '../../../../model/estado/estado-dto';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { EstadoService } from '../../../../servico/estado/estado.service';
 import Swal from 'sweetalert2';
 import { ErrorDTO } from '../../../../model/error/error-dto';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule, JsonPipe, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-estadodetail',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule, JsonPipe],
   templateUrl: './estadodetail.component.html',
   styleUrl: './estadodetail.component.scss'
 })
@@ -21,6 +22,7 @@ export class EstadodetailComponent {
 
   estadoService = inject(EstadoService);
   mensagemErro!: string;
+  isFormSubmetido: boolean = false;
 
   constructor() {
     let id = this.routerActivate.snapshot.params['id'];
@@ -40,7 +42,9 @@ export class EstadodetailComponent {
     });
   }
 
-  salvar() {
+  salvar(form: NgForm) {
+    this.isFormSubmetido = true;
+    // form.setValue({'dsNome.touched': false, 'dsNome.dirty': false})
     if(this.estadoDTO.sqEstado > 0) {
       this.alterar();
     } else {
@@ -75,6 +79,7 @@ export class EstadodetailComponent {
         });
         document.getElementById("closeModalButton")?.click();
         this.estadoDTO = new EstadoDTO();
+        this.isFormSubmetido = false;
       },
       error: erros => {
         this.exibirErros(erros.error);

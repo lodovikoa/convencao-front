@@ -10,11 +10,11 @@
           <h1 class="negrito">CONFRATERES</h1>
 
           <div class="form-floating mb-2">
-            <input type="text" class="form-control" id="dsUsuario" placeholder="Usuário" [(ngModel)]="loginDTO.login">
+            <input type="text" class="form-control" id="dsUsuario" placeholder="Usuário" [(ngModel)]="loginDTO.login" (keyup.enter)="logar()">
             <label for="dsUsuario">Usuário</label>
           </div>
           <div class="form-floating mb-2">
-            <input type="password" class="form-control" id="dsSenha" placeholder="Password" [(ngModel)]="loginDTO.password">
+            <input type="password" class="form-control" id="dsSenha" placeholder="Password" [(ngModel)]="loginDTO.password" (keyup.enter)="logar()">
             <label for="dsSenha">Senha</label>
           </div>
 
