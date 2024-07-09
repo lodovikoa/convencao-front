@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../../services/login/login.service';
+import { LoginUsuarioLogado } from '../../../models/login/login-usuario-logado';
 
 
 @Component({
@@ -12,12 +14,16 @@ import Swal from 'sweetalert2';
 })
 export class MenuComponent {
 
+  loginService = inject(LoginService);
+  usuarioLogado = new LoginUsuarioLogado();
+
   menuValue: boolean = false;
   menu_icon: string = 'bi bi-list';
 
   router = inject(Router);
 
   constructor(){
+    this.obterUsuarioLogado();
   }
 
   openMenu() {
@@ -31,7 +37,7 @@ export class MenuComponent {
   }
 
   obterUsuarioLogado() {
-    return localStorage.getItem('cvn-usu');
+    this.usuarioLogado = this.loginService.getUsuarioLogado();
   }
 
   fechar() {
@@ -56,5 +62,9 @@ export class MenuComponent {
 
   estadosListar() {
     this.router.navigate(['convencao/estados']);
+  }
+
+  convencaoListar() {
+    this.router.navigate(['convencao/convencao']);
   }
 }

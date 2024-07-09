@@ -1,11 +1,12 @@
 import { Component, Input, inject } from '@angular/core';
-import { EstadoDTO } from '../../../../model/estado/estado-dto';
-import { FormsModule, NgForm } from '@angular/forms';
-import { EstadoService } from '../../../../servico/estado/estado.service';
+import { EstadoDTO } from '../../../../models/estado/estado-dto';
+import { FormsModule } from '@angular/forms';
+import { EstadoService } from '../../../../services/estado/estado.service';
 import Swal from 'sweetalert2';
-import { ErrorDTO } from '../../../../model/error/error-dto';
+import { ErrorDTO } from '../../../../models/error/error-dto';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, JsonPipe, NgFor } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-estadodetail',
@@ -37,14 +38,13 @@ export class EstadodetailComponent {
         this.estadoDTO = resultado;
       },
       error: erros => {
-        this.exibirErros(erros.error);
+        this.exibirErros(erros.error, erros.status);
       }
     });
   }
 
-  salvar(form: NgForm) {
+  salvar() {
     this.isFormSubmetido = true;
-    // form.setValue({'dsNome.touched': false, 'dsNome.dirty': false})
     if(this.estadoDTO.sqEstado > 0) {
       this.alterar();
     } else {
@@ -64,7 +64,7 @@ export class EstadodetailComponent {
         this.estadoDTO = new EstadoDTO();
       },
       error: erros => {
-        this.exibirErros(erros.error);
+        this.exibirErros(erros.error, erros.status);
       }
     });
   }
@@ -82,19 +82,14 @@ export class EstadodetailComponent {
         this.isFormSubmetido = false;
       },
       error: erros => {
-        this.exibirErros(erros.error);
+        this.exibirErros(erros.error, erros.status);
       }
     });
   }
 
-  exibirErros(errorDTO: ErrorDTO) {
-    if(errorDTO != null &&  errorDTO.dsMensUsuario != null) {
-      this.mensagemErro = errorDTO.dsMensUsuario;
-    } else {
-      this.mensagemErro = 'Ocorreu algum erro não identificado. Contacte o administrador.'
-    }
+  exibirErros(errorDTO: ErrorDTO, codErro: number) {
     Swal.fire({
-      title: this.mensagemErro,
+      title: errorDTO != null && errorDTO.dsMensUsuario + ' Cógido do erro: ' + codErro != null? errorDTO.dsMensUsuario: environment.erroNaoIdntificado + ' Cógido do erro: ' + codErro,
       icon: 'error',
       confirmButtonText: 'Ok'
     });

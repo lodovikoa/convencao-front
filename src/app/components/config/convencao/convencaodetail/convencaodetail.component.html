@@ -1,1 +1,98 @@
-<p>convencaodetail works!</p>
+<div class="container container-principal">
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      <div class="card">
+        <div class="card-body">
+          <h3>Convenção</h3>
+
+          <form class="needs-validation" novalidate #userForm="ngForm">
+            <div class="form-group row">
+
+              <!-- Nome reduzido -->
+              <div class="text-danger" *ngIf="dsReduzido.invalid && (dsReduzido.touched || dsReduzido.dirty) || isFormSubmetido">
+                <span *ngIf="dsReduzido.errors?.['required']">Nome reduzido é obrigatório</span>
+                <span *ngIf="dsReduzido.errors?.['minlength']">Nome reduzido deve conter de 3 a 20 caracteres</span>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsReduzido">Nome reduzido:</span>
+                <input type="text" class="form-control" name="inputDsReduzido"  #dsReduzido="ngModel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Nome reduzido" [(ngModel)]="convencaoDTO.dsReduzido" required minlength="3" maxlength="20">
+              </div>
+
+              <!-- Nome da Convenção -->
+              <div class="text-danger" *ngIf="dsConvencao.invalid && (dsConvencao.touched || dsConvencao.dirty) || isFormSubmetido">
+                <span *ngIf="dsConvencao.errors?.['required']">Nome da convenção é obrigatório</span>
+                <span *ngIf="dsConvencao.errors?.['minlength']">Nome da convenção deve conter de 3 a 100 caracteres</span>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsConvencao">Nome completo:</span>
+                <input type="text" class="form-control" name="inputDsConvencao"  #dsConvencao="ngModel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Nome da convenção" [(ngModel)]="convencaoDTO.dsConvencao" required minlength="3" maxlength="100">
+              </div>
+
+              <!-- CNPJ -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsConvencao">CNPJ:</span>
+                <input type="text" class="form-control" name="inputDsCnpj" aria-describedby="inputGroup-sizing-sm" placeholder="CNPJ" [(ngModel)]="convencaoDTO.dsCnpj">
+              </div>
+
+              <!-- Endereço -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsConvencao">Endereço:</span>
+                <input type="text" class="form-control" name="inputDsEndereco" aria-describedby="inputGroup-sizing-sm" placeholder="Rua/Av..., Nº" [(ngModel)]="convencaoDTO.dsEndereco" maxlength="100">
+              </div>
+
+              <!-- Bairro -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsConvencao">Bairro:</span>
+                <input type="text" class="form-control" name="inputDsBairro" aria-describedby="inputGroup-sizing-sm" placeholder="Bairro" [(ngModel)]="convencaoDTO.dsBairro" maxlength="100">
+              </div>
+
+              <!-- CEP -->
+              <div class="text-danger" *ngIf="dsCep.invalid && (dsCep.touched || dsCep.dirty) || isFormSubmetido">
+                <span *ngIf="dsCep.errors?.['pattern']">O CEP deve estar no formato: 29101-572 ou 292101572</span>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsCep">CEP:</span>
+                <input type="text" class="form-control" #dsCep="ngModel" name="inputDsCep" aria-describedby="inputGroup-sizing-sm" placeholder="Ex.: 29101-080" [(ngModel)]="convencaoDTO.dsCep" maxlength="9" pattern="\d{5}-?\d{3}">
+              </div>
+
+              <!-- Cidade -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsCidade">Cidade:</span>
+                <input type="text" class="form-control" name="inputDsCidade" aria-describedby="inputGroup-sizing-sm" placeholder="Cidade" [(ngModel)]="convencaoDTO.dsCidade" maxlength="100">
+              </div>
+
+              <!-- Estado -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsCidade">Estado:</span>
+                <select class="form-select form-select-sm"
+                        aria-label="Small select example"
+                        name="selEstado"
+                        id="selEstado"
+                        (change)="capturarEstado($event)"
+                        [(ngModel)]="convencaoDTO.estado.sqEstado"
+                        [compareWith]="compareStates"
+                        >
+                  <option value="">Selecione</option>
+                  @for (item of estadosDTO; track $index) {
+                    <option [value]="item.sqEstado">{{item.dsNome}}</option>
+                  }
+                </select>
+              </div>
+
+              <!-- Pais -->
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsPais">País:</span>
+                <input type="text" class="form-control" name="inputDsPais" aria-describedby="inputGroup-sizing-sm" placeholder="País" [(ngModel)]="convencaoDTO.dsPais" maxlength="50">
+              </div>
+
+            </div>
+            <div class="button_salvar">
+              <button type="button" class="btn btn-primary btn-rounded" [disabled]="userForm.invalid" (click)="salvar()">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,68 @@
-<p>convencaolist works!</p>
+<div class="container container-principal">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h3>Convenção</h3>
+          <div class="direita">
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoCadastrar()">Cadastrar Convenção</button>
+          </div>
+          <table border="1" class="table table-striped">
+            <thead>
+              <tr>
+                <th class="ocultar-elemento">ID</th>
+                <th>Convenção</th>
+                <th>Nome</th>
+                <th>Local</th>
+                <th>Ações</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of convencoes; track $index) {
+                <tr>
+                  <td class="ocultar-elemento">{{item.sqConvencao}}</td>
+                  <td>{{item.dsReduzido}}</td>
+                  <td>{{item.dsConvencao}}</td>
+                  <td>{{item.dsCidade}} @if(item.estado != null){/{{item.estado.dsUf}}}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoEditar(item)">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-floating botao-esquerda" (click)="convencaoExcluir(item)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para cadastrar/alterar Convenção -->
+<div id="modalConvencao" class="modal fade">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h3 class="modal-title">{{nomeDaModal}}</h3>
+        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <app-convencaodetail [convencaoDTO]="convencaoDTOEdit"></app-convencaodetail>
+      </div>
+
+      <div class="modal-footer">
+        <button id="closeModalButton" [hidden]="true"type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="fecharModal()">Fechar</button>
+        <button id="closeModalVisivel" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+
+    </div>
+  </div>
+</div>

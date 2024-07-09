@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PaginacaoDTO } from '../../../model/paginacao/paginacao-dto';
-import { PaginacaoRetornoDTO } from '../../../model/paginacao/paginacao-retorno-dto';
+import { PaginacaoDTO } from '../../../models/paginacao/paginacao-dto';
+import { PaginacaoRetornoDTO } from '../../../models/paginacao/paginacao-retorno-dto';
 
 @Component({
   selector: 'app-paginator',

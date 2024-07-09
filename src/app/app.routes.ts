@@ -3,6 +3,7 @@ import { LoginComponent } from './components/layout/login/login.component';
 import { PrincipalComponent } from './components/layout/principal/principal.component';
 import { EstadolistComponent } from './components/config/estado/estadolist/estadolist.component';
 import { EstadodetailComponent } from './components/config/estado/estadodetail/estadodetail.component';
+import { ConvencaolistComponent } from './components/config/convencao/convencaolist/convencaolist.component';
 
 export const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: 'full' },
@@ -11,7 +12,9 @@ export const routes: Routes = [
     children: [
       { path: "estados", component: EstadolistComponent  },
       { path: "estados/new", component: EstadodetailComponent },
-      { path: "estados/edit/:id", component: EstadodetailComponent}
+      { path: "estados/edit/:id", component: EstadodetailComponent},
+
+      { path: "convencao", component: ConvencaolistComponent }
     ]
    }
 ];

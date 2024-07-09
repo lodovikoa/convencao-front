@@ -1,14 +1,14 @@
 
-import { Component, EventEmitter, Output, inject } from '@angular/core';
-import { EstadoService } from '../../../../servico/estado/estado.service';
-import { EstadoDTO } from '../../../../model/estado/estado-dto';
-import { ErrorDTO } from '../../../../model/error/error-dto';
+import { Component, inject } from '@angular/core';
+import { EstadoService } from '../../../../services/estado/estado.service';
+import { EstadoDTO } from '../../../../models/estado/estado-dto';
+import { ErrorDTO } from '../../../../models/error/error-dto';
 import Swal from 'sweetalert2';
 import { EstadodetailComponent } from "../estadodetail/estadodetail.component";
-import { PaginacaoDTO } from '../../../../model/paginacao/paginacao-dto';
+import { PaginacaoDTO } from '../../../../models/paginacao/paginacao-dto';
 import { PaginatorComponent } from "../../paginator/paginator.component";
-import { PaginacaoRetornoDTO } from '../../../../model/paginacao/paginacao-retorno-dto';
-import { environment } from '../../../../environments/environment';
+import { PaginacaoRetornoDTO } from '../../../../models/paginacao/paginacao-retorno-dto';
+import { environment } from '../../../../../environments/environment';
 
 
 @Component({
@@ -37,16 +37,14 @@ export class EstadolistComponent {
   estadosListar(page: number, size:number) {
     this.estadoService.listar(page, size).subscribe({
       next: sucesso => {
+        console.log('Sucesso');
+        console.log(sucesso);
+
         this.estados = sucesso.content;
         this.paginacaoDTO = sucesso.pageable;
       },
       error: erros => {
-        this.errorDTO = erros.error;
-        if(this.errorDTO != null && this.errorDTO.dsMensUsuario != null) {
-          this.mensagemErro = this.errorDTO.dsMensUsuario;
-        } else {
-          this.mensagemErro = 'Erro não identificado, contacte o administrador.';
-        }
+        this.exibirErros(erros.error, erros.status);
       }
     });
   }
@@ -83,17 +81,7 @@ export class EstadolistComponent {
               this.estadosListar(0, environment.qdteElementosPorPagina);
             },
             error: erros => {
-              this.errorDTO = erros.error;
-              if(this.errorDTO != null && this.errorDTO.dsMensUsuario != null) {
-                this.mensagemErro = this.errorDTO.dsMensUsuario;
-              } else {
-                this.mensagemErro = 'Erro não identificado, contacte o administrador.';
-              }
-              Swal.fire({
-                title: this.mensagemErro,
-                icon: 'error',
-                confirmButtonText: 'Ok'
-              });
+              this.exibirErros(erros.error, erros.status);
             }
           });
         }
@@ -106,5 +94,13 @@ export class EstadolistComponent {
 
    onPaginacaoProcessar(pg: PaginacaoRetornoDTO) {
     this.estadosListar(pg.paginaSelecionada, pg.qtdeElementosPorPagina);
+  }
+
+  exibirErros(errorDTO: ErrorDTO, codErro: number) {
+    Swal.fire({
+      title: errorDTO != null && errorDTO.dsMensUsuario != null? errorDTO.dsMensUsuario + ' Código erro: ' + codErro: environment.erroNaoIdntificado + ' Código erro: ' + codErro,
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
   }
 }

@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import Swal from 'sweetalert2';
-import { LoginDTO } from '../../../model/login/login-dto';
+import { LoginDTO } from '../../../models/login/login-dto';
 import { FormsModule } from '@angular/forms';
-import { LoginService } from '../../../servico/login/login.service';
-import { LoginRetornoDTO } from '../../../model/login/login-retorno-dto';
-import { ErrorDTO } from '../../../model/error/error-dto';
+import { ErrorDTO } from '../../../models/error/error-dto';
 import { Router } from '@angular/router';
 import { PrincipalComponent } from "../principal/principal.component";
+import { LoginService } from '../../../services/login/login.service';
+import { LoginTokenDTO } from '../../../models/login/login-token-dto';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -20,24 +21,23 @@ export class LoginComponent {
   mensagemLogin!: string;
   classMensagem: string = "alert alert-danger negrito";
   loginDTO = new LoginDTO();
-  loginRetornoDTO = new LoginRetornoDTO();
+  tokenDTO = new LoginTokenDTO();
   errorDTO = new ErrorDTO();
 
   loginService = inject(LoginService);
   router = inject(Router);
 
+  constructor() {
+    this.loginService.removeToken();
+  }
+
   logar() {
     this.mensagemLogin = '';
-    localStorage.removeItem("cvn-authorization");
-    localStorage.removeItem('cvn-usu');
-    localStorage.removeItem("cvn-trancode")
 
     this.loginService.login(this.loginDTO).subscribe({
       next: resultado => {
-        this.loginRetornoDTO = resultado;
-        localStorage.setItem("cvn-authorization", this.loginRetornoDTO.token);
-        localStorage.setItem("cvn-usu", this.loginRetornoDTO.dsNome);
-        localStorage.setItem("cvn-trancode", this.loginRetornoDTO.trancodes)
+        this.tokenDTO = resultado;
+        this.loginService.setToken(this.tokenDTO.token);
 
         this.router.navigate(['convencao']);
       },
@@ -47,7 +47,7 @@ export class LoginComponent {
           this.mensagemLogin = this.errorDTO.dsMensUsuario;
           this.classMensagem = "alert alert-danger negrito";
         } else {
-          this.mensagemLogin = 'Erro não identificado, contacte o administrador.';
+          this.mensagemLogin = environment.erroNaoIdntificado;
           this.classMensagem = "alert alert-danger negrito";
         }
       }
@@ -57,9 +57,6 @@ export class LoginComponent {
 
   recuperarSenha() {
     this.mensagemLogin = '';
-    localStorage.removeItem("cvn-authorization");
-    localStorage.removeItem('cvn-usu');
-    localStorage.removeItem("cvn-trancode")
 
     Swal.fire({
       title: 'Sua senha será reiniciada e enviada para o email cadastrado.',
@@ -81,7 +78,7 @@ export class LoginComponent {
               this.mensagemLogin = this.errorDTO.dsMensUsuario;
               this.classMensagem = "alert alert-danger negrito";
             } else {
-              this.mensagemLogin = 'Erro não identificado, contacte o administrador.';
+              this.mensagemLogin = environment.erroNaoIdntificado;
               this.classMensagem = "alert alert-danger negrito";
             }
           }

@@ -4,7 +4,7 @@
       <div class="col-md-3 col-sm-3 col-3">
         <div class="logo-container">
           <img src="assets/logo02.jpg" alt="" class="logo" [align]="'left'">
-          <div class="usuLogado">{{obterUsuarioLogado()}}</div>
+          <div class="usuLogado">{{usuarioLogado.usernamefull}}</div>
           <div class="botaoFechar" (click)="fechar()">Fechar</div>
         </div>
       </div>
@@ -22,9 +22,9 @@
                 Configuração
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Convenção</a></li>
                 <li><a class="dropdown-item" href="#">Departamentos</a></li>
                 <li><hr class="dropdown-divider"></li>
+                <li class="dropdown-item" (click)="convencaoListar()">Convenção</li>
                 <li class="dropdown-item" (click)="estadosListar()">Estados</li>
               </ul>
             </li>
