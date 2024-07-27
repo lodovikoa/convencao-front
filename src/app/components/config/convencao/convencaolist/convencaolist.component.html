@@ -6,7 +6,7 @@
         <div class="card-body">
           <h3>Convenção</h3>
           <div class="direita">
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoCadastrar()">Cadastrar Convenção</button>
+             <button type="button" [hidden]="!loginService.hasPermission('T_CFT_CONVENCAO_CADASTRAR')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoCadastrar()">Cadastrar Convenção</button>
           </div>
           <table border="1" class="table table-striped">
             <thead>
@@ -27,10 +27,10 @@
                   <td>{{item.dsConvencao}}</td>
                   <td>{{item.dsCidade}} @if(item.estado != null){/{{item.estado.dsUf}}}</td>
                   <td>
-                    <button type="button" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoEditar(item)">
+                    <button type="button" [hidden]="!loginService.hasPermission('T_CFT_CONVENCAO_EDITAR')" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalConvencao" (click)="convencaoEditar(item)">
                       <i class="fa fa-pencil"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-floating botao-esquerda" (click)="convencaoExcluir(item)">
+                    <button type="button" [hidden]="!loginService.hasPermission('T_CFT_CONVENCAO_EXCLUIR')" class="btn btn-danger btn-floating botao-esquerda" (click)="convencaoExcluir(item)">
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </td>
@@ -38,6 +38,7 @@
               }
             </tbody>
           </table>
+          <span>Total de registros: <b>{{convencoes.length}}</b></span>
         </div>
       </div>
     </div>

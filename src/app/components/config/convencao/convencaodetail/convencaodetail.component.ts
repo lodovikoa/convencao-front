@@ -33,8 +33,6 @@ export class ConvencaodetailComponent {
   }
 
   ngOnInit() {
-    console.log('============== LISTANDO ESTADOS ===========');
-
     this.listarEstados();
   }
 
@@ -56,7 +54,7 @@ export class ConvencaodetailComponent {
         this.estadosDTO = resultado;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
@@ -67,13 +65,12 @@ export class ConvencaodetailComponent {
         this.convencaoDTO = resultado;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
 
   salvar() {
-    console.log('Estados: ' + this.estadosDTO);
     if(this.convencaoDTO.sqConvencao > 0) {
       this.alterar();
     } else {
@@ -85,7 +82,7 @@ export class ConvencaodetailComponent {
     this.convencaoService.alterar(this.convencaoDTO).subscribe({
       next: resultado => {
         Swal.fire({
-          title: 'Convenção ' + resultado.dsReduzido + 'alterado com sucesso.',
+          title: 'Convenção ' + resultado.dsReduzido + ' alterado com sucesso.',
           icon: 'success',
           confirmButtonText: 'Ok'
         });
@@ -94,7 +91,7 @@ export class ConvencaodetailComponent {
         this.isFormSubmetido = false;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
@@ -112,14 +109,14 @@ export class ConvencaodetailComponent {
         this.isFormSubmetido = false;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
 
-  exibirErros(errorDTO: ErrorDTO, codErro: number) {
+  exibirErros(errorDTO: ErrorDTO, codErro: number, url: string) {
     Swal.fire({
-      title: errorDTO != null && errorDTO.dsMensUsuario  + ' Código do erro: ' + codErro!= null? errorDTO.dsMensUsuario: environment.erroNaoIdntificado + ' Código do erro: ' + codErro,
+      title: errorDTO != null && errorDTO.dsMensUsuario != null? errorDTO.dsMensUsuario + '<br>Código erro: ' + codErro: environment.erroNaoIdntificado + '<br>Código erro: ' + codErro + '<br>url:' + url,
       icon: 'error',
       confirmButtonText: 'Ok'
     });

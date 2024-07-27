@@ -9,6 +9,7 @@ import { PaginacaoDTO } from '../../../../models/paginacao/paginacao-dto';
 import { PaginatorComponent } from "../../paginator/paginator.component";
 import { PaginacaoRetornoDTO } from '../../../../models/paginacao/paginacao-retorno-dto';
 import { environment } from '../../../../../environments/environment';
+import { LoginService } from '../../../../services/login/login.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ import { environment } from '../../../../../environments/environment';
 })
 export class EstadolistComponent {
 
+  loginservice = inject(LoginService);
   estadoService = inject(EstadoService);
   estados: EstadoDTO[] = [];
   paginacaoDTO = new PaginacaoDTO;
@@ -37,14 +39,11 @@ export class EstadolistComponent {
   estadosListar(page: number, size:number) {
     this.estadoService.listar(page, size).subscribe({
       next: sucesso => {
-        console.log('Sucesso');
-        console.log(sucesso);
-
         this.estados = sucesso.content;
         this.paginacaoDTO = sucesso.pageable;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
@@ -81,7 +80,7 @@ export class EstadolistComponent {
               this.estadosListar(0, environment.qdteElementosPorPagina);
             },
             error: erros => {
-              this.exibirErros(erros.error, erros.status);
+              this.exibirErros(erros.error, erros.status, erros.url);
             }
           });
         }
@@ -96,9 +95,9 @@ export class EstadolistComponent {
     this.estadosListar(pg.paginaSelecionada, pg.qtdeElementosPorPagina);
   }
 
-  exibirErros(errorDTO: ErrorDTO, codErro: number) {
+  exibirErros(errorDTO: ErrorDTO, codErro: number, url: string) {
     Swal.fire({
-      title: errorDTO != null && errorDTO.dsMensUsuario != null? errorDTO.dsMensUsuario + ' Código erro: ' + codErro: environment.erroNaoIdntificado + ' Código erro: ' + codErro,
+      title: errorDTO != null && errorDTO.dsMensUsuario != null? errorDTO.dsMensUsuario + '<br>Código erro: ' + codErro: environment.erroNaoIdntificado + '<br>Código erro: ' + codErro + '<br>url:' + url,
       icon: 'error',
       confirmButtonText: 'Ok'
     });

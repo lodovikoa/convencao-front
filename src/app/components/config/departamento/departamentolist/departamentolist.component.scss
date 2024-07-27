@@ -1,0 +1,7 @@
+.ocultar-elemento {
+  display: none;
+}
+
+td:first-child + td + td + td {
+  width: 103px
+}

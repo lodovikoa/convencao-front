@@ -4,7 +4,7 @@
       <div class="col-md-3 col-sm-3 col-3">
         <div class="logo-container">
           <img src="assets/logo02.jpg" alt="" class="logo" [align]="'left'">
-          <div class="usuLogado">{{usuarioLogado.usernamefull}}</div>
+          <div class="usuLogado">{{loginService.getUsuarioLogado().usernamefull}}</div>
           <div class="botaoFechar" (click)="fechar()">Fechar</div>
         </div>
       </div>
@@ -17,17 +17,31 @@
             <li (click)="closeMenu()">Home</li>
             <li (click)="closeMenu()">About</li>
             <li (click)="closeMenu()">Courses</li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Configuração
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Departamentos</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li class="dropdown-item" (click)="convencaoListar()">Convenção</li>
-                <li class="dropdown-item" (click)="estadosListar()">Estados</li>
-              </ul>
-            </li>
+
+            @if(loginService.hasPermission('T_CFT_ESTADO_LISTAR')
+                  || loginService.hasPermission('T_CFT_CONVENCAO_LISTAR')){
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Configuração
+                </a>
+                <ul class="dropdown-menu">
+
+                  <li><hr class="dropdown-divider"></li>
+
+                  @if(loginService.hasPermission('T_CFT_CONVENCAO_LISTAR')) {
+                    <li class="dropdown-item" (click)="convencaoListar()">Convenção</li>
+                  }
+
+                  @if(loginService.hasPermission('T_CFT_DEPARTAMENTO_LISTAR')) {
+                    <li class="dropdown-item" (click)="departamentoListar()">Departamentos</li>
+                  }
+
+                  @if(loginService.hasPermission('T_CFT_ESTADO_LISTAR')) {
+                    <li class="dropdown-item" (click)="estadosListar()">Estados</li>
+                  }
+                </ul>
+              </li>
+            }
             <li (click)="closeMenu()">Contact</li>
           </ul>
         </div>

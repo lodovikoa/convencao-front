@@ -4,30 +4,31 @@
     <div class="col-lg-8">
       <div class="card">
         <div class="card-body">
-          <h3>Estados</h3>
+          <h3>Departamento</h3>
           <div class="direita">
-             <button type="button" [hidden]="!loginservice.hasPermission('T_CFT_ESTADO_CADASTRAR')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="estadoCadastrar()">Cadastrar Estado</button>
+             <button type="button" [hidden]="!loginService.hasPermission('T_CFT_DEPARTAMENTO_CADASTRAR')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDepartamento" (click)="cadastrar()">Cadastrar Departamento</button>
           </div>
           <table border="1" class="table table-striped">
             <thead>
               <tr>
                 <th class="ocultar-elemento">ID</th>
-                <th>Sigla</th>
+                <th>Nome reduzido</th>
                 <th>Nome</th>
                 <th>Ações</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              @for (item of estados; track $index) {
+              @for (item of departamentos; track $index) {
                 <tr>
-                  <td class="ocultar-elemento">{{item.sqEstado}}</td>
-                  <td>{{item.dsUf}}</td>
-                  <td>{{item.dsNome}}</td>
+                  <td class="ocultar-elemento">{{item.sqDepartamento}}</td>
+                  <td>{{item.dsReduzido}}</td>
+                  <td>{{item.dsDepartamento}}</td>
                   <td>
-                    <button type="button" [hidden]="!loginservice.hasPermission('T_CFT_ESTADO_EDITAR')" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalEstados" (click)="estadoEditar(item)">
+                    <button type="button" [hidden]="!loginService.hasPermission('T_CFT_DEPARTAMENTO_EDITAR')" class="btn btn-primary btn-floating me-1" data-bs-toggle="modal" data-bs-target="#modalDepartamento" (click)="editar(item)">
                       <i class="fa fa-pencil"></i>
                     </button>
-                    <button type="button" [hidden]="!loginservice.hasPermission('T_CFT_ESTADO_EXCLUIR')" class="btn btn-danger btn-floating botao-esquerda" (click)="estadoExcluir(item)">
+                    <button type="button" [hidden]="!loginService.hasPermission('T_CFT_DEPARTAMENTO_EXCLUIR')" class="btn btn-danger btn-floating botao-esquerda" (click)="excluir(item)">
                       <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                   </td>
@@ -35,16 +36,15 @@
               }
             </tbody>
           </table>
-          <app-paginator [paginacaoDTO]="paginacaoDTO" (paginacaoRetorno)="onPaginacaoProcessar($event)"></app-paginator>
+          <span>Total de registros: <b>{{departamentos.length}}</b></span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-
-<!-- Modal para cadastrar/alterar Estados -->
-<div id="modalEstados" class="modal fade">
+<!-- Modal para cadastrar/alterar Departamento -->
+<div id="modalDepartamento" class="modal fade">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
 
@@ -54,7 +54,7 @@
       </div>
 
       <div class="modal-body">
-        <app-estadodetail [estadoDTO]="estadoDTOedit"></app-estadodetail>
+         <app-departamentodetail [departamentoDTO]="departamentoDTOEdit"></app-departamentodetail>
       </div>
 
       <div class="modal-footer">

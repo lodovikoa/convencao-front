@@ -6,6 +6,7 @@ import { environment } from '../../../../../environments/environment';
 import Swal from 'sweetalert2';
 import { ConvencaodetailComponent } from "../convencaodetail/convencaodetail.component";
 import { EstadoDTO } from '../../../../models/estado/estado-dto';
+import { LoginService } from '../../../../services/login/login.service';
 
 @Component({
     selector: 'app-convencaolist',
@@ -16,6 +17,7 @@ import { EstadoDTO } from '../../../../models/estado/estado-dto';
 })
 export class ConvencaolistComponent {
 
+  loginService = inject(LoginService);
   convencaoService = inject(ConvencaoService);
   convencoes: ConvencaoDTO[] = [];
   convencaoDTOEdit = new ConvencaoDTO();
@@ -77,8 +79,7 @@ export class ConvencaolistComponent {
           }
         });
       }
-
-    })
+    });
   }
 
   fecharModal() {

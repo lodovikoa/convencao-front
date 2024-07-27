@@ -15,7 +15,7 @@ import { LoginUsuarioLogado } from '../../../models/login/login-usuario-logado';
 export class MenuComponent {
 
   loginService = inject(LoginService);
-  usuarioLogado = new LoginUsuarioLogado();
+  // usuarioLogado = new LoginUsuarioLogado();
 
   menuValue: boolean = false;
   menu_icon: string = 'bi bi-list';
@@ -23,7 +23,7 @@ export class MenuComponent {
   router = inject(Router);
 
   constructor(){
-    this.obterUsuarioLogado();
+   // this.obterUsuarioLogado();
   }
 
   openMenu() {
@@ -36,9 +36,9 @@ export class MenuComponent {
     this.menu_icon = 'bi bi-list';
   }
 
-  obterUsuarioLogado() {
-    this.usuarioLogado = this.loginService.getUsuarioLogado();
-  }
+  // obterUsuarioLogado() {
+  //   this.usuarioLogado = this.loginService.getUsuarioLogado();
+  // }
 
   fechar() {
     Swal.fire({
@@ -60,11 +60,16 @@ export class MenuComponent {
 
   }
 
+  convencaoListar() {
+    this.router.navigate(['convencao/convencao']);
+  }
+
+  departamentoListar() {
+    this.router.navigate(['convencao/departamento']);
+  }
+
   estadosListar() {
     this.router.navigate(['convencao/estados']);
   }
 
-  convencaoListar() {
-    this.router.navigate(['convencao/convencao']);
-  }
 }

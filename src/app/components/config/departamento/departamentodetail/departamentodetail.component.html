@@ -1,0 +1,41 @@
+<div class="container container-principal">
+  <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      <div class="card">
+        <div class="card-body">
+          <h3>Departamento</h3>
+
+          <form class="needs-validation" novalidate #userForm="ngForm">
+            <div class="form-group row">
+
+              <!-- Nome reduzido -->
+              <div class="text-danger" *ngIf="dsReduzido.invalid && (dsReduzido.touched || dsReduzido.dirty) || isFormSubmetido">
+                <span *ngIf="dsReduzido.errors?.['required']">Nome reduzido é obrigatório</span>
+                <span *ngIf="dsReduzido.errors?.['minlength']">Nome reduzido deve conter de 3 a 20 caracteres</span>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsReduzido">Nome reduzido:</span>
+                <input type="text" class="form-control" name="inputDsReduzido"  #dsReduzido="ngModel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Nome reduzido" [(ngModel)]="departamentoDTO.dsReduzido" required minlength="3" maxlength="20">
+              </div>
+
+              <!-- Nome do departamento -->
+              <div class="text-danger" *ngIf="dsDepartamento.invalid && (dsDepartamento.touched || dsDepartamento.dirty) || isFormSubmetido">
+                <span *ngIf="dsDepartamento.errors?.['required']">Nome do departamento é obrigatório</span>
+                <span *ngIf="dsDepartamento.errors?.['minlength']">Nome do departamento deve conter de 3 a 100 caracteres</span>
+              </div>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text col-sm-3" id="spDsDepartamento">Nome completo:</span>
+                <input type="text" class="form-control" name="inputDsDepartamento"  #dsDepartamento="ngModel" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Nome do departamento" [(ngModel)]="departamentoDTO.dsDepartamento" required minlength="3" maxlength="100">
+              </div>
+
+            </div>
+            <div class="button_salvar">
+              <button type="button" class="btn btn-primary btn-rounded" [disabled]="userForm.invalid" (click)="salvar()">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,7 +38,7 @@ export class EstadodetailComponent {
         this.estadoDTO = resultado;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
@@ -64,7 +64,7 @@ export class EstadodetailComponent {
         this.estadoDTO = new EstadoDTO();
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
@@ -82,14 +82,14 @@ export class EstadodetailComponent {
         this.isFormSubmetido = false;
       },
       error: erros => {
-        this.exibirErros(erros.error, erros.status);
+        this.exibirErros(erros.error, erros.status, erros.url);
       }
     });
   }
 
-  exibirErros(errorDTO: ErrorDTO, codErro: number) {
+  exibirErros(errorDTO: ErrorDTO, codErro: number, url: string) {
     Swal.fire({
-      title: errorDTO != null && errorDTO.dsMensUsuario + ' Cógido do erro: ' + codErro != null? errorDTO.dsMensUsuario: environment.erroNaoIdntificado + ' Cógido do erro: ' + codErro,
+      title: errorDTO != null && errorDTO.dsMensUsuario != null? errorDTO.dsMensUsuario + '<br>Código erro: ' + codErro: environment.erroNaoIdntificado + '<br>Código erro: ' + codErro + '<br>url:' + url,
       icon: 'error',
       confirmButtonText: 'Ok'
     });

@@ -48,23 +48,18 @@ export class LoginService {
 
   hasPermission(role: string) {
     let user = this.jwtDecodeToken() as LoginUsuarioLogado;
-
     let roles = user.role;
 
-    let resultado = roles.indexOf('ROLE_' + role) > -1;
+    // console.log(user.id);
+    // console.log(user.username);
+    // console.log(user.usernamefull);
+    // console.log(user.role);
 
-    console.log(resultado);
-
-
-    console.log(user.id);
-    console.log(user.username);
-    console.log(user.usernamefull);
-    console.log(user.role);
-
+    return (roles.indexOf('ROLE_' + role) > -1);
   }
 
   getUsuarioLogado() {
-    this.hasPermission('ROLE_T_CFT_ESTADO_LISTAR');
+    this.hasPermission('T_CFT_ESTADO_LISTAR');
     return this.jwtDecodeToken()  as LoginUsuarioLogado;
   }
 
